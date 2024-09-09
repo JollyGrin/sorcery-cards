@@ -1,3 +1,9 @@
+import { Grid } from "styled-system/jsx";
+
 export default function Home() {
-  return <p>Hello world</p>;
+  return (
+    <Grid h="100vh" w="100vw" placeItems="center">
+      <img src="/cards/35/abundance-f.webp" />
+    </Grid>
+  );
 }
