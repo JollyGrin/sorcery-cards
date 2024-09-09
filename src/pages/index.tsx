@@ -1,7 +1,5 @@
 import { Box, Grid, HStack } from "styled-system/jsx";
 
-const images = ["abundance-f.webp"];
-
 export default function Home() {
   return (
     <Grid h="100vh" w="100vw" placeItems="center">
