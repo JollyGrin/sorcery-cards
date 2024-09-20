@@ -1,6 +1,4 @@
 import { Box, Grid, HStack } from "styled-system/jsx";
-import * as TOKENS from "../public/tokens.json";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
