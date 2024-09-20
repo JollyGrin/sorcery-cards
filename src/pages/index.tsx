@@ -1,6 +1,22 @@
 import { Box, Grid, HStack } from "styled-system/jsx";
+import * as TOKENS from "../public/tokens.json";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
+  const [tokens, setData] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/tokens.json");
+      const json = (await response.json()) as string[];
+      setData(json);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Grid h="100vh" w="100vw" placeItems="center">
       <HStack>
@@ -18,6 +34,20 @@ export default function Home() {
               /cards/<strong>{e}</strong>abundance-f.webp
             </code>
           </Box>
+        ))}
+      </HStack>
+      <p>
+        Custom tokens, works with above pathing, get list via:{" "}
+        <Link href="/tokens.json">tokens.json</Link>
+      </p>
+      <HStack flexWrap="wrap">
+        {tokens?.map((token) => (
+          <img
+            key={token}
+            alt="token image"
+            src={`/cards/${token}.webp `}
+            style={{ aspectRatio: 2 / 3, width: "250px" }}
+          />
         ))}
       </HStack>
     </Grid>
