@@ -1,6 +1,22 @@
-TODO
-edit this read me
-
-Sorcery card images are available through an api, yet it's requested to not use it for constant calls. Thus, this is a saved repository of cached images that can be fetched through the identifier. 
+Primarily being used for https://spells.bar
 
 No Rights Included.
+
+# Images
+All standard card images come from https://drive.google.com/drive/folders/17IrJkRGmIU9fDSTU2JQEU9JlFzb5liLJ
+This repository is created because https://api.sorcerytcg.com/ recommends hosting the data elsewhere.
+
+Images are downloaded seperately from this repository, and then uses the `scripts/compressQuality` script to convert to webp at various compression levels.
+
+# Tokens
+Token images and data is not available from the sorcery api. 
+
+These token images are custom added, seperate from the google docs
+
+The pathnames for these tokens are in `public/token.json`. 
+
+To add tokens, add to `public/tokens` and then run `node scripts/makeTokenNames.js`.
+Generate the images with `cd scripts && ./compressAddQuality.sh`
+
+
+
