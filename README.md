@@ -15,8 +15,8 @@ These token images are custom added, seperate from the google docs
 
 The pathnames for these tokens are in `public/token.json`. 
 
-To add tokens, add to `public/tokens` and then run `node scripts/makeTokenNames.js`.
-Generate the images with `cd scripts && ./compressAddQuality.sh`
+To add tokens, add to `public/tokens` and then run `cd scripts && node makeTokenNames.js`.
+Generate the images with `cd scripts && ./compressAddTokens.sh`
 
 
 
