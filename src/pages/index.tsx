@@ -16,9 +16,9 @@ export default function Home() {
   }, []);
 
   return (
-    <Grid h="100vh" w="100vw" placeItems="center">
+    <Grid h="100vh" w="100vw" placeItems="center" p="2rem">
       <HStack>
-        {["", "50/", "20/", "5/"].map((e) => (
+        {["", "50/"].map((e) => (
           <Box key={e + "card"}>
             <img src={`/cards/${e}abundance-f.webp `} />
             <code
