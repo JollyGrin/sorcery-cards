@@ -1,13 +1,12 @@
-import { Box, Flex, Grid, HStack, VStack } from "styled-system/jsx";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Box, Flex, Grid, VStack } from "styled-system/jsx";
+import { useState } from "react";
 
 export default function Home() {
   const [input, setInput] = useState("");
   const [ids, setIds] = useState<string[]>();
 
   const PRECON_AIR_ALPHA = "clqfhk28d0028ip242l6tp11m";
-  function mapId(card: any) {
+  function mapId(card: { identifier: string }) {
     return card.identifier;
   }
   async function fetchDeck() {
@@ -20,7 +19,6 @@ export default function Home() {
         curiosaId,
     );
     const data = await response.json();
-    const ids = data?.atlas?.map(mapId);
     setIds(
       [
         ...data?.atlas?.map(mapId),
