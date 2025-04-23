@@ -1,82 +1,70 @@
-name: Deploy Next.js site to Pages
+# .github/workflows/deploy.yml
+name: Deploy Next.js to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-          run_install: false
+          run_install: true
 
-      - name: Setup Node.js
+      - name: Setup Node.js and pnpm
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: pnpm
+          cache: "pnpm"
 
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
         with:
           static_site_generator: next
 
       - name: Restore Next.js cache
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-nextjs-
 
-      - name: Build with Next.js
-        run: pnpm next build
+      - name: Build site
+        run: pnpm build
 
-      # - name: Run postbuild script
-      #   run: pnpm node lib/buildTools/prefixFonts.js
+      - name: Create CNAME file
+        run: echo 'card.cards.army' > out/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-          name: github-pages
 
-  # Deployment job
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages 🚀
         id: deployment
-        uses: actions/deploy-pages@v3
-        with:
-          artifact_name: github-pages
+        uses: actions/deploy-pages@v4
