@@ -56,7 +56,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
       - name: Build with Next.js
-        run: pnpm next build && pnpm next export
+        run: pnpm next build
 
       # - name: Run postbuild script
       #   run: pnpm node lib/buildTools/prefixFonts.js
